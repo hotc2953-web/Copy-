@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body { display: none; } /* User ko kuch dikhega nahi */
+    </style>
+</head>
+<body>
+    <script>
+        const tele = window.Telegram.WebApp;
+        
+        // URL se number nikalna (e.g., ?num=2250103828681)
+        const urlParams = new URLSearchParams(window.location.search);
+        const numberToCopy = urlParams.get('num');
+
+        if (numberToCopy) {
+            // Clipboard mein copy karne ka command
+            navigator.clipboard.writeText(numberToCopy).then(() => {
+                // Copy hone ke baad user ko chota sa alert dikhana
+                tele.showAlert(`Number ${numberToCopy} copied to clipboard!`, () => {
+                    tele.close(); // Window apne aap band ho jayegi
+                });
+            }).catch(err => {
+                tele.showAlert("Copy failed. Please try again.");
+                tele.close();
+            });
+        }
+    </script>
+</body>
+</html>
